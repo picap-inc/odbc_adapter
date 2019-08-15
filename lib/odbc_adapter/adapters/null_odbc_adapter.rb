@@ -8,8 +8,11 @@ module ODBCAdapter
       # sent to the DBMS (to attempt to get as much coverage as possible for
       # DBMSs we don't support).
       def arel_visitor
-        # Using PostgresSQL visitor since BindVisitor is deprecated in Arel 9.0
-        # We only need Postgre Adapter.
+        # BindVisitor was used to substitude SQL string before it is sent to the
+        # DBMS (to attempt to get as much coverage as possible for DMBSs).
+        #
+        # However, BindVisitor is removed in Arel 9.0, and we only need to support
+        # Postgres; Replace with PostgreSQL visitor for our use case.
         Arel::Visitors::PostgreSQL.new(self)
       end
 
